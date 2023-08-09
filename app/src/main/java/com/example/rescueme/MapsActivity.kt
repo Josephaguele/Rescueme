@@ -1,11 +1,16 @@
 package com.example.rescueme
 
 import android.Manifest
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.pm.PackageManager
 import android.location.Location
+import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.*
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -15,6 +20,10 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.google.firebase.ml.modeldownloader.CustomModelDownloadConditions
+import com.google.firebase.ml.modeldownloader.DownloadType
+import com.google.firebase.ml.modeldownloader.FirebaseModelDownloader
+import org.tensorflow.lite.Interpreter
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
@@ -44,6 +53,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
+        createNotificationChannel()
+
     }
 
     private fun updateMarker(location: Location) {
@@ -58,7 +69,61 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)) // Set marker icon here
         )
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
+
+        // Create input data for the model
+        val latitude = location.latitude.toFloat()
+        val longitude = location.longitude.toFloat()
+
+        val conditions = CustomModelDownloadConditions.Builder()
+            .requireWifi()
+            .build()
+        FirebaseModelDownloader.getInstance()
+            .getModel("rescueisolation", DownloadType.LOCAL_MODEL, conditions)
+            .addOnSuccessListener { model ->
+                // Download complete. Create an interpreter and run inference
+                val interpreter = Interpreter(model.file!!)
+
+                val input = Array(1) { FloatArray(2) }
+                input[0][0] = latitude
+                input[0][1] = longitude
+
+                val output = Array(1) { FloatArray(2) }
+                interpreter.run(input, output)
+
+                val result = output[0][0]
+
+                if (result <= THRESHOLD) {
+                    showNotification()
+                }
+            }
     }
+
+
+    private fun showNotification() {
+        val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.drawable.ic_warning)
+            .setContentTitle("Unsafe Location")
+            .setContentText("The current location is considered unsafe.")
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+
+        val notificationManager = NotificationManagerCompat.from(this)
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
+    }
+
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
@@ -107,7 +172,23 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "Unsafe Location"
+            val descriptionText = "Channel for notifications about unsafe locations"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(CHANNEL_ID, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager = getSystemService(NotificationManager::class.java)
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+
     companion object {
         private const val REQUEST_LOCATION_PERMISSION = 1
+        private const val CHANNEL_ID = "UnsafeLocationChannel"
+        private const val NOTIFICATION_ID = 1
+        private const val THRESHOLD = 0.2
     }
 }
