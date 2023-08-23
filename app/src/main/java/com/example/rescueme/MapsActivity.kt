@@ -3,7 +3,11 @@ package com.example.rescueme
 import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.location.Location
 import android.os.Build
 import android.os.Bundle
@@ -53,7 +57,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
             }
         }
-        createNotificationChannel()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU){
+            if(ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.POST_NOTIFICATIONS) !=
+                    PackageManager.PERMISSION_GRANTED){
+                ActivityCompat.requestPermissions(this,
+                arrayOf(Manifest.permission.POST_NOTIFICATIONS), 101)
+            }
+        }
+        //createNotificationChannel()
+
 
     }
 
@@ -93,7 +107,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 val result = output[0][0]
 
                 if (result <= THRESHOLD) {
-                    showNotification()
+                    makeNotification()
                 }
             }
     }
@@ -124,7 +138,35 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         notificationManager.notify(NOTIFICATION_ID, notificationBuilder.build())
     }
 
+    private fun makeNotification(){
+        var channelID = "CHANNEL_ID_NOTIFICATION";
+        var builder: NotificationCompat.Builder =
+            NotificationCompat.Builder(applicationContext, channelID)
+        builder.setSmallIcon(R.drawable.notification_important)
+            .setContentTitle("It looks like you have not been here before")
+            .setAutoCancel(false)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
 
+        var intent = Intent(applicationContext,TestActivity::class.java);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("data", "Just a test");
+
+        var pendingIntent = PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_MUTABLE)
+        builder.setContentIntent(pendingIntent)
+        var notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O){
+            var notificationChannel = notificationManager.getNotificationChannel(channelID)
+            if(notificationChannel == null){
+                var importance :Int = NotificationManager.IMPORTANCE_HIGH;
+                notificationChannel = NotificationChannel(channelID, "some description", importance)
+                notificationChannel.lightColor = Color.GREEN
+                notificationChannel.enableVibration(true)
+                notificationManager.createNotificationChannel(notificationChannel)
+            }
+        }
+
+        notificationManager.notify(0, builder.build())
+    }
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -189,6 +231,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         private const val REQUEST_LOCATION_PERMISSION = 1
         private const val CHANNEL_ID = "UnsafeLocationChannel"
         private const val NOTIFICATION_ID = 1
-        private const val THRESHOLD = 0.2
+        private const val THRESHOLD = 0.1
     }
 }
