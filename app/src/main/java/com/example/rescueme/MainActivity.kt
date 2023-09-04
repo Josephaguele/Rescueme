@@ -22,5 +22,10 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this, MapsActivity::class.java)
             startActivity(intent)
         }
+
+        informationImageView.setOnClickListener{
+            var intent = Intent(this, InformationActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
