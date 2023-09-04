@@ -85,10 +85,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f))
 
         // Create input data for the model
-       val latitude = location.latitude.toFloat()
-        val longitude = location.longitude.toFloat()
-    /* val latitude = 59.0977972f
-        val longitude = 7.1641361f*/
+       //val latitude = location.latitude.toFloat()
+      // val longitude = location.longitude.toFloat()
+        val latitude = 47.7878753f
+            val longitude = -2.709149f
         val conditions = CustomModelDownloadConditions.Builder()
             .build()
         FirebaseModelDownloader.getInstance()
@@ -100,15 +100,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     val interpreter = Interpreter(modelFile)
 
-                    /* val input = Array(1) { FloatArray(2) }
-                     input[0][0] = latitude
-                     input[0][1] = longitude
-
-                     val output = Array(1) { FloatArray(2) }
-                     interpreter.run(input, output)
-
-
-                     val result = output[0][0]*/
                     val input = floatArrayOf(latitude, longitude)
                     val output = Array(1) { FloatArray(1) }
 

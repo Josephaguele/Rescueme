@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="4dp"
+    android:layout_marginBottom="16dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:background="@color/cardview_light_background"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/location_imageView"
+        android:layout_width="163dp"
+        android:layout_height="180dp"
+        app:layout_constraintBottom_toTopOf="@+id/trial"
+        app:layout_constraintEnd_toStartOf="@id/information_imageView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="#AA0C4227"
+        app:srcCompat="@android:drawable/ic_menu_mapmode" />
+
+
+    <TextView
+        android:id="@+id/yourlocationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your location"
+        android:textStyle="bold"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintBottom_toTopOf="@id/trial"
+        app:layout_constraintEnd_toEndOf="@id/location_imageView"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="@id/location_imageView"
+        app:layout_constraintTop_toBottomOf="@id/location_imageView"
+        app:layout_constraintVertical_bias="0.103" />
+
+    <ImageView
+        android:id="@+id/information_imageView"
+        android:layout_width="163dp"
+        android:layout_height="180dp"
+        android:src="@drawable/img"
+        app:layout_constraintStart_toEndOf="@id/location_imageView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="220dp" />
+
+    <TextView
+        android:id="@+id/yourinformationTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your information"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/imageView4"
+        app:layout_constraintEnd_toEndOf="@id/information_imageView"
+        app:layout_constraintHorizontal_bias="0.491"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintStart_toStartOf="@id/information_imageView"
+        app:layout_constraintTop_toBottomOf="@id/information_imageView"
+        app:layout_constraintVertical_bias="0.103" />
+
+    <ImageView
+        android:id="@+id/trial"
+        android:layout_width="163dp"
+        android:layout_height="201dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/location_imageView"
+        app:layout_constraintEnd_toStartOf="@id/imageView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_warning"
+        tools:layout_editor_absoluteX="29dp"
+        tools:layout_editor_absoluteY="375dp" />
+
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="163dp"
+        android:layout_height="201dp"
+        app:layout_constraintStart_toEndOf="@+id/trial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/information_imageView"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:srcCompat="@drawable/info"
+        tools:layout_editor_absoluteX="220dp"
+        tools:layout_editor_absoluteY="375dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
