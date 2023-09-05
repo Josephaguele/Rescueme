@@ -32,17 +32,15 @@
         android:textColor="@color/black"
         android:layout_height="wrap_content"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Your name">
 
-        <com.google.android.material.textfield.TextInputEditText
+
+        <EditText
             android:layout_width="match_parent"
-            android:id="@+id/age_input"
+            android:id="@+id/name_input"
+            android:textColor="@color/black"
             android:layout_height="wrap_content" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+
 
 </LinearLayout>
 
@@ -60,17 +58,11 @@
             android:textColor="@color/black"
             android:layout_height="wrap_content"/>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Your height in feet">
-
-            <com.google.android.material.textfield.TextInputEditText
+            <EditText
                 android:layout_width="match_parent"
                 android:id="@+id/height_input"
+                android:textColor="@color/black"
                 android:layout_height="wrap_content" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

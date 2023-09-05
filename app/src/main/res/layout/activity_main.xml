@@ -15,7 +15,7 @@
         android:id="@+id/location_imageView"
         android:layout_width="163dp"
         android:layout_height="180dp"
-        app:layout_constraintBottom_toTopOf="@+id/trial"
+        app:layout_constraintBottom_toTopOf="@+id/emergencyImageView"
         app:layout_constraintEnd_toStartOf="@id/information_imageView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,7 +30,7 @@
         android:text="Your location"
         android:textStyle="bold"
         android:textColor="@color/cardview_dark_background"
-        app:layout_constraintBottom_toTopOf="@id/trial"
+        app:layout_constraintBottom_toTopOf="@id/emergencyImageView"
         app:layout_constraintEnd_toEndOf="@id/location_imageView"
         app:layout_constraintHorizontal_bias="0.481"
         app:layout_constraintStart_toStartOf="@id/location_imageView"
@@ -44,7 +44,7 @@
         android:src="@drawable/img"
         app:layout_constraintStart_toEndOf="@id/location_imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/imageView4"
+        app:layout_constraintBottom_toTopOf="@+id/aboutImageView"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="220dp" />
 
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:text="Your information"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/imageView4"
+        app:layout_constraintBottom_toTopOf="@id/aboutImageView"
         app:layout_constraintEnd_toEndOf="@id/information_imageView"
         app:layout_constraintHorizontal_bias="0.491"
         android:textColor="@color/cardview_dark_background"
@@ -63,22 +63,22 @@
         app:layout_constraintVertical_bias="0.103" />
 
     <ImageView
-        android:id="@+id/trial"
+        android:id="@+id/emergencyImageView"
         android:layout_width="163dp"
         android:layout_height="201dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/location_imageView"
-        app:layout_constraintEnd_toStartOf="@id/imageView4"
+        app:layout_constraintEnd_toStartOf="@id/aboutImageView"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_warning"
+        app:srcCompat="@drawable/img_1"
         tools:layout_editor_absoluteX="29dp"
         tools:layout_editor_absoluteY="375dp" />
 
     <ImageView
-        android:id="@+id/imageView4"
+        android:id="@+id/aboutImageView"
         android:layout_width="163dp"
         android:layout_height="201dp"
-        app:layout_constraintStart_toEndOf="@+id/trial"
+        app:layout_constraintStart_toEndOf="@+id/emergencyImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/information_imageView"
         app:layout_constraintBottom_toBottomOf="parent"
