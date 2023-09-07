@@ -3,11 +3,9 @@ package com.example.rescueme
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
-class TestActivity : AppCompatActivity() {
+class About : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_test)
-
-
+        setContentView(R.layout.activity_about)
     }
 }

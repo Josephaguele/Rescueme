@@ -12,6 +12,7 @@
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="title_activity_information">Information</string>
+    <string name="this_application_works_with_your_location_data_to_check_whether_where_you_are_in_an_unknown_environment_it_can_help_trigger_an_alert_when_you_feel_unsafe">This application works with your location data to check whether where you are in an unknown environment. It can help trigger an alert when you feel unsafe</string>
 
 
 </resources>

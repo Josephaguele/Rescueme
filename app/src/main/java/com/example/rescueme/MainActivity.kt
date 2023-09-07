@@ -9,6 +9,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var informationImageView: ImageView
     private lateinit var locationImageView: ImageView
+    private lateinit var emergencyView: ImageView
+    private lateinit var aboutView : ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,7 +18,8 @@ class MainActivity : AppCompatActivity() {
 
          locationImageView = findViewById(R.id.location_imageView)
         informationImageView = findViewById(R.id.information_imageView)
-
+        emergencyView = findViewById(R.id.emergencyImageView)
+        aboutView = findViewById(R.id.aboutImageView)
         locationImageView.setOnClickListener{
 
             var intent = Intent(this, MapsActivity::class.java)
@@ -27,5 +30,15 @@ class MainActivity : AppCompatActivity() {
             var intent = Intent(this, InformationActivity::class.java)
             startActivity(intent)
         }
+
+        emergencyView.setOnClickListener{
+
+        }
+
+        aboutView.setOnClickListener{
+            var intent = Intent(this, About::class.java)
+                startActivity(intent)
+        }
+
     }
 }
